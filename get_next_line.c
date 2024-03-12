@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliaariasiniesta <juliaariasiniesta@st    +#+  +:+       +#+        */
+/*   By: jarias-i <jarias-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:55:26 by jarias-i          #+#    #+#             */
-/*   Updated: 2024/03/11 16:54:20 by juliaariasi      ###   ########.fr       */
+/*   Updated: 2024/03/12 12:13:38 by jarias-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,11 +163,3 @@ al while en el int main, por tanto, o que pasa que funciona analizando línea po
 lea de 1 en 1, de 100 en 100 o de 9999 en 9999. Por tanto, lo que se cuestiona en este proyecto es que nuestro
 programa, lea con el tamaño que lea, si hay una línea la devuelva entera y no "a cachos" y que pueda leer 
 archivos largos, como cortos y que los procese adecuadamente.*/
-
-// char    *join_and_free(char *static_lines, char *buffer)
-// {
-//     char    *ptr;
-
-//     ptr = ft_strjoin(static_lines, buffer);
-//     return (ptr);
-// }

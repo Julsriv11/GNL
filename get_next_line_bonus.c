@@ -6,7 +6,7 @@
 /*   By: jarias-i <jarias-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:55:26 by jarias-i          #+#    #+#             */
-/*   Updated: 2024/03/11 12:47:24 by jarias-i         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:34:56 by jarias-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ char	*read_file(char *static_lines, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*static_lines[MAX_FD]; //se transforma esta variable en un array de char con el máximo fd que sea capaz de gestionar
+	static char	*static_lines[1024]; //se transforma esta variable en un array de char con el máximo fd que sea capaz de gestionar
 	char		*result;				// el ordenador
 
-	if (fd < 0 || BUFFER_SIZE < 0)
+	if (fd < 0 || BUFFER_SIZE < 0 || fd > 1024)
 		return (NULL);
 	static_lines[fd] = read_file(static_lines[fd], fd);	//Se especifica que fd está leyendo para que no se sobreescriban otros fd
 	if (static_lines[fd] == NULL)
@@ -108,72 +108,15 @@ char	*get_next_line(int fd)
 	static_lines[fd] = to_the_endline(static_lines[fd]);
 	return (result);
 }
-
-// void ft_leaks()
-// {
-// 	system("leaks -q a.out");
-// }
-
-// int main(void)
-// {
-//     int     fd[5];
-//     char    *next_line1;
-// 	int		i = 0;
-// 	int		nlinea[5] = {1, 1, 1, 1, 1};
-// 	int		finish[5] = {0, 0, 0, 0, 0};
-// 	//atexit(ft_leaks);
-
-// 	fd[0] = open("bonus1.txt", O_RDONLY);
-// 	fd[1] = open("bonus2.txt", O_RDONLY);
-// 	fd[2] = open("bonus3.txt", O_RDONLY);
-// 	fd[3] = open("bonus4.txt", O_RDONLY);
-// 	//fd[4] = open("bonus5.txt", O_RDONLY);
-//     if (fd[0] == -1 || fd[1] == -1 || fd[2] == -1 || fd[3] == -1 || fd[4] == -1)
-//     {
-//         printf("Error opening file");
-//         return 1;
-//     }
-//     while (1)
-//     {
-//         int	each_fd = fd[i];
-// 		next_line1 = get_next_line(each_fd);
-//         if (next_line1 == NULL)
-//         {
-// 			//printf("The file is empty or null");
-// 			close(each_fd);
-// 			finish[i] = 1;
-// 		}
-//         else
-//         {
-//             printf("File %d en línea %d: %s\n", each_fd, nlinea[i], next_line1);
-// 				nlinea[i]++;
-//             free(next_line1);
-//         }
-// 	i = (i + 1) % 5;
-// 	if (finish[0] && finish[1] && finish[2] && finish[3] && finish[4])
-// 	{
-// 		break ;
-// 	}
-//     }
-// 	//system("leaks -q a.out");
-//     return 0;
-// }
-
+/* 
 int main(void)
 {
     int     fd1 = open("bonus3.txt", O_RDONLY);
 	int     fd2 = open("bonus4.txt", O_RDONLY);
-	// int     fd3 = open("bonus3.txt", O_RDONLY);
-	// int     fd4 = open("bonus4.txt", O_RDONLY);
-	// int     fd5 = open("bonus5.txt", O_RDONLY);
     char    *next_line1;
 	char    *next_line2;
-	// char    *next_line3;
-	// char    *next_line4;
-	// char    *next_line5;
 
-	//atexit(ft_leaks);
-    if (fd1 == -1 || fd2 == -1 /* || fd3 == -1 || fd4 == -1 || fd5 == -1 */)
+    if (fd1 == -1 || fd2 == -1)
     {
         printf("Error opening file");
         return 1;
@@ -181,30 +124,38 @@ int main(void)
     while (1)
     {
         next_line1 = get_next_line(fd1);
-        if (next_line1 == NULL)
-		{
-			printf("El archivo está vacío o es nulo");
-            break ;
-		}
-		printf("File 1\n");
-		printf("%s\n", next_line1);
-		free(next_line1);
-		
-		next_line2 = get_next_line(fd2);
-		if (next_line2 == NULL)
+		if (next_line1 != NULL)
         {
-			printf("El archivo está vacío o es nulo");
-            break ;
+			printf("File 1\n");
+			printf("%s\n", next_line1);
+			free(next_line1);
 		}
-		printf("File 2\n");
-		printf("%s\n", next_line2);
-		free(next_line2);
-			// free(next_line3);
-			// free(next_line4);
-			// free(next_line5);
-        // }
+		else
+		{
+			printf("End of File 1\n");
+            break;
+		}
+        
+		next_line2 = get_next_line(fd2);
+		if (next_line2 != NULL)
+        {
+			printf("File 2\n");
+			printf("%s\n", next_line2);
+			free(next_line2);
+		}
+		else
+		{
+			printf("End of File 2\n");
+            while((next_line1 = get_next_line(fd1)) != NULL)
+			{
+				printf("File 1\n");
+				printf("%s\n", next_line1);
+				free(next_line1);
+			}
+			break ;
+		}
     }
     close(fd1);
 	close(fd2);
     return 0;
-}
+} */
